@@ -69,7 +69,9 @@ and continue with fetch list generation and so on:
     ./run_nutch.sh generate crawldb/ segments/
 
 
-The script [run_nutch.sh](./run_nutch.sh) is just for convenience - if everything is properly set up, you could just run `$NUTCH_HOME/bin/nutch` or even `$NUTCH_HOME/bin/crawl`.
+The script [run_nutch.sh](./run_nutch.sh) is just for convenience - if everything is properly set up, you could just run `$NUTCH_HOME/bin/nutch` or even `$NUTCH_HOME/bin/crawl`. Alternatively, you can launch Nutch jobs the "normal" way Hadoop MapReduce jobs are launched, e.g.
+
+    hadoop jar $NUTCH_HOME/apache-nutch-1.15-SNAPSHOT.job org.apache.nutch.crawl.Injector ...
 
 
 # Stop Hadoop services
