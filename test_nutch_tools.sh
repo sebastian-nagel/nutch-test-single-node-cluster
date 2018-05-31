@@ -70,7 +70,7 @@ nutch readseg -list -dir crawl/segments
 segment=$(hadoop fs -ls -C crawl/segmentsx/merge/ | sort | tail -n 1)
 nutch readseg -dump $segment crawl/segmentsx/merge-dump
 hadoop fs -text crawl/segmentsx/merge-dump/dump
-nutch readseg -get crawl/segmentsx/merge "https://nutch.apache.org/"
+nutch readseg -get $segment "https://nutch.apache.org/"
 
 ### Solr indexing
 nutch index -Dsolr.server.url=http://localhost:8983/solr/nutch crawl/crawldb -linkdb crawl/linkdb -dir crawl/segments
