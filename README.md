@@ -21,6 +21,7 @@ Please follow the [Nutch installation description](https://wiki.apache.org/nutch
 
     git clone https://github.com/apache/nutch.git
     cd nutch/
+    # NOTE: need to configure at least http.agent.name in conf/nutch-site.xml
     ant runtime
     cd ..
 

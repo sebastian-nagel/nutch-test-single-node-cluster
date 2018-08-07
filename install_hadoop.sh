@@ -29,6 +29,7 @@ sed -i 's@^export JAVA_HOME=\${JAVA_HOME}@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_
 grep JAVA_HOME $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 mkdir $HADOOP_HOME/logs
+chmod a+rxwt $HADOOP_HOME/logs
 
 chown -R root:root $HADOOP_HOME
 find $HADOOP_HOME/ -type d -exec chmod a+rx '{}' \;

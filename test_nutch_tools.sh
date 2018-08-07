@@ -29,7 +29,7 @@ hadoop fs -copyFromLocal -f sitemaps.txt crawl/seeds/
 nutch sitemap crawl/crawldb -sitemapUrls crawl/seeds/sitemaps.txt
 
 
-$NUTCH_HOME/bin/crawl --size-fetchlist 10 --time-limit-fetch 2 --num-threads 5  crawl  $CYCLES
+$NUTCH_HOME/bin/crawl --size-fetchlist 10 --time-limit-fetch 2 --num-threads 5 --num-slaves 2 crawl  $CYCLES
 
 echo "http://www.example.org/" >freegen.txt
 echo "http://this-domain-does-not-exist/" >>freegen.txt
@@ -47,7 +47,7 @@ hadoop fs -text crawl/linkdbx/dump/part-r-00000
 nutch mergelinkdb crawl/linkdbx/merge crawl/linkdb
 
 ### HostDb
-nutch updatehostdb -hostdb crawl/hostdb -crawldb crawl/crawldb
+nutch updatehostdb -hostdb crawl/hostdb -crawldb crawl/crawldb -checkAll
 nutch readhostdb crawl/hostdb -get "nutch.apache.org"
 nutch readhostdb crawl/hostdb crawl/crawldbx/hostdump -dumpHostnames
 hadoop fs -text crawl/crawldbx/hostdump/part-m-00000
@@ -73,8 +73,8 @@ hadoop fs -text crawl/segmentsx/merge-dump/dump
 nutch readseg -get $segment "https://nutch.apache.org/"
 
 ### Solr indexing
-nutch index -Dsolr.server.url=http://localhost:8983/solr/nutch crawl/crawldb -linkdb crawl/linkdb -dir crawl/segments
-nutch clean -Dsolr.server.url=http://localhost:8983/solr/nutch crawl/crawldb
+nutch index crawl/crawldb -linkdb crawl/linkdb -dir crawl/segments
+nutch clean crawl/crawldb
 
 
 ### webgraph
