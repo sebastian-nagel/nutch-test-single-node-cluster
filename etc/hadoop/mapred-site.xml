@@ -23,14 +23,23 @@
     <value>yarn</value>
   </property>
 
-  <!-- Ensure the max here is bigger than the mapreduce.map.memory.mb and mapreduce.reduce.memory.mb settings -->
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+  <property>
+    <name>mapreduce.application.classpath</name>
+    <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+  </property>
+
+  <!-- Ensure the max here is lower than the mapreduce.map.memory.mb and mapreduce.reduce.memory.mb settings -->
   <property>
     <name>mapreduce.map.java.opts</name>
-  <value>-Xmx2730m -XX:+UseCompressedOops</value>
+  <value>-Xmx2560m -XX:+UseCompressedOops</value>
   </property>
   <property>
     <name>mapreduce.reduce.java.opts</name>
-  <value>-Xmx2730m -XX:+UseCompressedOops</value>
+  <value>-Xmx2560m -XX:+UseCompressedOops</value>
   </property>
 
   <!-- This is used for sizing the jobs -->

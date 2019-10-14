@@ -1,5 +1,5 @@
 
-HADOOP_VERSION=2.8.4
+HADOOP_VERSION=3.2.1
 export HADOOP_HOME=/opt/hadoop/$HADOOP_VERSION
 
 export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/default-java}

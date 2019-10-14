@@ -1,7 +1,7 @@
 Test Apache Nutch on a single-node Hadoop cluster
 =================================================
 
-Scripts and configuration to test [Apache Nutch]() on Ubuntu 16.04 in pseudo-distributed mode (single-node Hadoop cluster).
+Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 18.04 in pseudo-distributed mode (single-node Hadoop cluster).
 
 
 # Installation of Hadoop
