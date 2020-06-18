@@ -20,9 +20,9 @@
   </property>
 
   <property>
-	  <name>yarn.nodemanager.vmem-check-enabled</name>
-	  <value>false</value>
-	</property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+  </property>
 
   <property>
     <name>yarn.nodemanager.env-whitelist</name>
