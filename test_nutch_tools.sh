@@ -21,15 +21,17 @@ set -exo pipefail
 
 echo "https://nutch.apache.org/" >urls.txt
 hadoop fs -copyFromLocal -f urls.txt crawl/seeds/
-nutch inject crawl/crawldb crawl/seeds/urls.txt
+nutch inject -Dmapreduce.job.reduces=2 crawl/crawldb crawl/seeds/urls.txt
 nutch readdb crawl/crawldb -url "https://nutch.apache.org/"
+
+$NUTCH_HOME/bin/crawl --size-fetchlist 10 --time-limit-fetch 2 --num-threads 5 --num-fetchers 2 --num-tasks 2 crawl  1
 
 echo "https://www.sitemaps.org/sitemap.xml" >sitemaps.txt
 hadoop fs -copyFromLocal -f sitemaps.txt crawl/seeds/
 nutch sitemap crawl/crawldb -sitemapUrls crawl/seeds/sitemaps.txt
 
 
-$NUTCH_HOME/bin/crawl --size-fetchlist 10 --time-limit-fetch 2 --num-threads 5 --num-slaves 2 crawl  $CYCLES
+$NUTCH_HOME/bin/crawl --size-fetchlist 10 --time-limit-fetch 2 --num-threads 5 --num-fetchers 2 --num-tasks 2 crawl  $CYCLES
 
 echo "http://www.example.org/" >freegen.txt
 echo "http://this-domain-does-not-exist/" >>freegen.txt
