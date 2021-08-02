@@ -1,7 +1,7 @@
 Test Apache Nutch on a single-node Hadoop cluster
 =================================================
 
-Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 18.04 in pseudo-distributed mode (single-node Hadoop cluster).
+Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 20.04 using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
 
 
 # Installation of Hadoop
@@ -37,7 +37,7 @@ Run
     ./start_hadoop.sh
 
 To verify whether HDFS and YARN services are running check:
-- http://localhost:50070/
+- http://localhost:9870/
 - http://localhost:8088/cluster/apps/RUNNING
 
 Alternatively, check the services from command-line
@@ -74,7 +74,10 @@ The script [run_nutch.sh](./run_nutch.sh) is just for convenience - if everythin
 
     hadoop jar $NUTCH_HOME/apache-nutch-*.job org.apache.nutch.crawl.Injector ...
 
+The script [test_nutch_tools.sh](./test_nutch_tools.sh) can be used to test multiple Nutch tools in pseudo-distributed mode.
+
 
 # Stop Hadoop services
 
     ./stop_hadoop.sh
+

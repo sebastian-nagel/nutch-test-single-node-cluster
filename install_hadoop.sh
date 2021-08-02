@@ -32,11 +32,12 @@ echo "Configuring Hadoop installation"
 cp -v etc/hadoop/* $HADOOP_HOME/etc/hadoop/
 
 # add JAVA_HOME to hadoop-env.sh
-sed -i 's@^export JAVA_HOME=\${JAVA_HOME}@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}@' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+sed -i 's@^export JAVA_HOME=\${JAVA_HOME.*}@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}@' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 sed -i 's@^# export JAVA_HOME=@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}@' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+# verify proper configuration of JAVA_HOME
 grep JAVA_HOME $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
-mkdir $HADOOP_HOME/logs
+mkdir -p $HADOOP_HOME/logs
 chmod a+rxwt $HADOOP_HOME/logs
 
 chown -R root:root $HADOOP_HOME

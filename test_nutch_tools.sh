@@ -59,6 +59,7 @@ nutch readdb crawl/crawldb -stats
 nutch readdb crawl/crawldb -dump crawl/crawldbx/dump
 hadoop fs -text crawl/crawldbx/dump/part-r-00000
 nutch readdb crawl/crawldb -dump crawl/crawldbx/dumpcsv -format csv
+nutch readdb crawl/crawldb -dump crawl/crawldbx/dumpjson -format json
 hadoop fs -text crawl/crawldbx/dumpcsv/part-r-00000
 nutch readdb crawl/crawldb -topN 50 crawl/crawldbx/topn
 
