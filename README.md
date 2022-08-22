@@ -1,7 +1,7 @@
 Test Apache Nutch on a single-node Hadoop cluster
 =================================================
 
-Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 20.04 using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
+Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 22.04 using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
 
 
 # Installation of Hadoop
@@ -74,7 +74,11 @@ The script [run_nutch.sh](./run_nutch.sh) is just for convenience - if everythin
 
     hadoop jar $NUTCH_HOME/apache-nutch-*.job org.apache.nutch.crawl.Injector ...
 
-The script [test_nutch_tools.sh](./test_nutch_tools.sh) can be used to test multiple Nutch tools in pseudo-distributed mode.
+## Automatic Testing of Nutch Core Tools
+
+The script [test_nutch_tools.sh](./test_nutch_tools.sh) can be used to test multiple Nutch core tools in pseudo-distributed mode.
+
+Note: Solr must be up and running in order to run the indexing step with the default configuration. If Solr (or any other indexing backend in a customized configuration) is not installed, please disable the indexing command in the test script.
 
 
 # Stop Hadoop services
