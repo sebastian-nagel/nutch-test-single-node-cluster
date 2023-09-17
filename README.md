@@ -10,7 +10,7 @@ Please download first a [stable Hadoop binary package](https://hadoop.apache.org
 
     sudo ./install_hadoop.sh
 
-Hadoop version and installation path need to be configured in [hadoop_install_config.sh](hadoop_install_config.sh) which is shared by all scripts. You also may want to source the file to make the command-line tools available in your shell:
+Hadoop version and installation path need to be configured in [hadoop_install_config.sh](hadoop_install_config.sh) which is shared by all scripts. After installation, you also may want to source the file to make the Hadoop command-line tools available in your shell:
 
     . ./hadoop_install_config.sh
 
@@ -25,7 +25,7 @@ Please follow the [Nutch installation description](https://wiki.apache.org/nutch
     ant runtime
     cd ..
 
-If compiled point the environment variable `NUTCH_HOME` (`NUTCH_RUNTIME_HOME` also works) to the folder `.../runtime/deploy/` which is created by `ant runtime`. The Nutch job file `apache-nutch-1.*.job` is expected to be located in this folder.
+If compiled point the environment variable `NUTCH_HOME` (`NUTCH_RUNTIME_HOME` also works) to the folder `.../nutch/runtime/deploy/` which is created by `ant runtime`. The Nutch job file `apache-nutch-1.*.job` is expected to be located in this folder.
 
 Please note that you need to recompile if the configuration is changed because configuration files are contained in the job file.
 
