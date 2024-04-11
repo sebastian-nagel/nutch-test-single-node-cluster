@@ -29,4 +29,19 @@
     <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
   </property>
 
+  <property>
+    <name>yarn.log-aggregation-enable</name>
+    <value>true</value>
+  </property>
+
+  <!--
+    See https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/file/tfile/TFile.html
+    Use gzip (value `gz`) because lzo compression requires extra libraries/modules
+    and is not always available.
+  -->
+  <property>
+    <name>yarn.nodemanager.log-aggregation.compression-type</name>
+    <value>gz</value>
+  </property>
+
 </configuration>
