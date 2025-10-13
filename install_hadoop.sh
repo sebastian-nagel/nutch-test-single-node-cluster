@@ -32,15 +32,23 @@ echo "Configuring Hadoop installation"
 cp -v etc/hadoop/* $HADOOP_HOME/etc/hadoop/
 
 # add JAVA_HOME to hadoop-env.sh
-sed -i 's@^export JAVA_HOME=\${JAVA_HOME.*}@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}@' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-sed -i 's@^# export JAVA_HOME=@export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}@' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+sed -i'' -E 's|^export JAVA_HOME=.*$|export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}|' $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+sed -i'' -E 's|^# *export JAVA_HOME=.*$|export JAVA_HOME=${JAVA_HOME:-'"$JAVA_HOME"'}|' "$HADOOP_HOME/etc/hadoop/hadoop-env.sh"
 # verify proper configuration of JAVA_HOME
 grep JAVA_HOME $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 mkdir -p $HADOOP_HOME/logs
 chmod a+rxwt $HADOOP_HOME/logs
 
-chown -R root:root $HADOOP_HOME
+# Detect OS and set group
+if [[ "$(uname)" == "Darwin" ]]; then
+  GROUP="wheel"  # macOS
+else
+  GROUP="root"   # Linux (assumes root group exists)
+fi
+
+# Run chown with sudo
+sudo chown -R "root:$GROUP" "$HADOOP_HOME"
 find $HADOOP_HOME/ -type d -exec chmod a+rx '{}' \;
 find $HADOOP_HOME/ -type f -exec chmod a+r '{}' \;
 chmod a+x $HADOOP_HOME/sbin/*.sh
