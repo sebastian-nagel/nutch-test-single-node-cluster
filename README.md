@@ -1,8 +1,11 @@
 Test Apache Nutch on a single-node Hadoop cluster
 =================================================
 
-Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) on Ubuntu 22.04 using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
+Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
 
+The project has been tested on the following operating systems
+* Ubuntu 22.04
+* MacOS Tahoe 26.0.1 (Apple M4 Chip) - Note, install the following package `brew install gnu-tar`
 
 # Installation of Hadoop
 
@@ -31,6 +34,24 @@ Please note that you need to recompile if the configuration is changed because c
 
 
 # Start Hadoop services
+
+<details>
+
+<summary>If running on MacOS...</summary>
+
+You must enable Remote Login. To do that you need to grant Full Disk Access to the Terminal application you use to start the Hadoop services. You can check this by executing `sudo systemsetup -getremotelogin`. You should see `Remote Login: On`. If remote login in `Off` follow the steps below
+
+* Open System Settings: go to Apple Menu > `System Settings` (or `System Preferences` on older macOS versions).
+* Navigate to Privacy & Security: select `Privacy & Security` > `Full Disk Access`.
+* Add Terminal: click the `+` button to add an application.
+* Navigate to `Applications` > `Utilities` > `Terminal.app` (or whatever terminal you use), select it, and click `Open`.
+* Ensure the toggle next to Terminal is enabled (checked).
+* Restart Terminal: quit Terminal (if open) by typing exit or closing the window.
+* Reopen Terminal. 
+* Now that Terminal has Full Disk Access, try enabling Remote Login: `sudo systemsetup -setremotelogin on`. You should see `Remote Login: On`.
+* Confirm the SSH server is running: run `sudo launchctl list | grep ssh`, look for `com.openssh.sshd` in the output. If it’s not running, start it: `sudo launchctl start com.openssh.sshd`
+
+</details>
 
 Run
 
