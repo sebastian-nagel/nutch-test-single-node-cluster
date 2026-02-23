@@ -138,8 +138,18 @@ pipeline {
                     cat ${HADOOP_HOME}/etc/hadoop/yarn-site.xml
                     cat ${HADOOP_HOME}/etc/hadoop/mapred-site.xml
 
+                    echo "=== Allow DataNode to register in single-node/CI (hostname check off) ==="
+                    grep -q 'dfs.namenode.datanode.registration.ip-hostname-check' ${HADOOP_HOME}/etc/hadoop/hdfs-site.xml || sed -i '/<\\/configuration>/i\\
+  <property>\\
+    <name>dfs.namenode.datanode.registration.ip-hostname-check</name>\\
+    <value>false</value>\\
+  </property>' ${HADOOP_HOME}/etc/hadoop/hdfs-site.xml
+
                     echo "=== Formatting HDFS namenode ==="
                     hdfs namenode -format -force
+
+                    echo "=== Clearing DataNode storage (clusterID must match freshly formatted NameNode) ==="
+                    rm -rf /tmp/hadoop-jenkins/dfs/data
 
                     echo "=== Starting HDFS daemons directly (no SSH) ==="
                     hdfs --daemon start namenode
@@ -150,7 +160,33 @@ pipeline {
                     yarn --daemon start nodemanager
 
                     echo "=== Waiting for daemons to initialize ==="
-                    sleep 10
+                    sleep 5
+
+                    echo "=== Waiting for at least one HDFS DataNode to register ==="
+                    HDFS_WAIT_TIMEOUT=90
+                    HDFS_WAIT_INTERVAL=3
+                    elapsed=0
+                    while [ $elapsed -lt $HDFS_WAIT_TIMEOUT ]; do
+                      if hdfs dfsadmin -report 2>/dev/null | grep -qE "Live datanodes \\([1-9][0-9]*\\)"; then
+                        echo "HDFS is ready (DataNode registered after ${elapsed}s)."
+                        break
+                      fi
+                      echo "Waiting for DataNode to register... (${elapsed}s / ${HDFS_WAIT_TIMEOUT}s)"
+                      sleep $HDFS_WAIT_INTERVAL
+                      elapsed=$((elapsed + HDFS_WAIT_INTERVAL))
+                    done
+                    if [ $elapsed -ge $HDFS_WAIT_TIMEOUT ]; then
+                      echo "ERROR: No DataNode registered after ${HDFS_WAIT_TIMEOUT}s. HDFS report:"
+                      hdfs dfsadmin -report || true
+                      echo "=== DataNode process check ==="
+                      jps -l 2>/dev/null | grep -i datanode || ps aux | grep -i datanode | grep -v grep || true
+                      echo "=== Last 200 lines of DataNode log ==="
+                      ls -la ${HADOOP_HOME}/logs/*datanode*.log 2>/dev/null || true
+                      tail -n 200 ${HADOOP_HOME}/logs/*datanode*.log 2>/dev/null || echo "No DataNode log found under ${HADOOP_HOME}/logs/"
+                      echo "=== Last 100 lines of NameNode log ==="
+                      tail -n 100 ${HADOOP_HOME}/logs/*namenode*.log 2>/dev/null || echo "No NameNode log found under ${HADOOP_HOME}/logs/"
+                      exit 1
+                    fi
 
                     echo "=== Verifying Hadoop daemons ==="
                     hdfs dfsadmin -report || echo "WARNING: HDFS report failed"
