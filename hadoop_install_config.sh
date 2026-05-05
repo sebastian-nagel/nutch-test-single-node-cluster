@@ -1,5 +1,5 @@
 
-HADOOP_VERSION=3.4.2
+HADOOP_VERSION=3.4.3
 HADOOP_HOME=/opt/hadoop/$HADOOP_VERSION
 
 if ! [ -d "$JAVA_HOME" ]; then
