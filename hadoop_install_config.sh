@@ -1,19 +1,20 @@
 
-HADOOP_VERSION=3.4.3
+HADOOP_VERSION=3.5.0
 HADOOP_HOME=/opt/hadoop/$HADOOP_VERSION
 
 if ! [ -d "$JAVA_HOME" ]; then
-    if [ -d /opt/homebrew/opt/openjdk@11 ]; then
+    if [ -d /opt/homebrew/opt/openjdk@17 ]; then
         # MacOS
-        JAVA_HOME=/opt/homebrew/opt/openjdk@11
-    elif [ -d /usr/lib/jvm/java-11-openjdk-amd64 ]; then
+        JAVA_HOME=/opt/homebrew/opt/openjdk@17
+    elif [ -d /usr/lib/jvm/java-17-openjdk-amd64 ]; then
         # Ubuntu Linux
-        JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+        JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     else
         echo "Please configure JAVA_HOME !"
         echo "If Java is installed, you may try to run"
         echo "  java -XshowSettings:properties -version 2>&1 | grep java.home"
         echo "to figure out the right path to JAVA_HOME."
+        echo "Note: JDK 17 is required to run Hadoop 3.5.0 and upwards."
     fi
 fi
 
