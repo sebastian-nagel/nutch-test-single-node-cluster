@@ -1,11 +1,26 @@
 Test Apache Nutch on a single-node Hadoop cluster
 =================================================
 
-Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) using OpenJDK 11 in pseudo-distributed mode (single-node Hadoop cluster).
+Scripts and configuration to test [Apache Nutch](https://nutch.apache.org/) using OpenJDK 17 in pseudo-distributed mode (single-node Hadoop cluster).
 
 The project has been tested on the following operating systems
-* Ubuntu 22.04
+* Ubuntu 22.04, 24.04, 26.04
 * MacOS Tahoe 26.0.1 (Apple M4 Chip) - Note, install the following package `brew install gnu-tar`
+
+# Nutch and Hadoop version compatibility
+
+Nutch versions are bundled with a specific Hadoop version and also require a specific Java JDK version. The following table gives an overview of version compatibilities. Other combinations may also work, but there is no guarantee.
+
+| Nutch | Hadoop | JDK | Released   |
+|:------|:-------|:----|:-----------|
+|  1.23 |  3.5.0 |  17 |            |
+|  1.22 |  3.4.2 |  11 | 2026-02-12 |
+|  1.21 |  3.3.6 |  11 | 2025-07-15 |
+|  1.20 |  3.3.6 |  11 | 2024-04-09 |
+|  1.19 |  3.3.4 |  11 | 2022-08-22 |
+|  1.18 |  3.1.3 |   8 | 2021-01-14 |
+
+If you want to use the single-node cluster setup with previous outdated releases of Nutch and Hadoop, please see the corresponding Git tags `nutch-1.xx`.
 
 # Installation of Hadoop
 
